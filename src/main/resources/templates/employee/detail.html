@@ -55,6 +55,7 @@
 
 		<!-- パンくずリスト -->
 		<ol class="breadcrumb">
+			<!-- パンクズリスト修正箇所 -->
 			<li><a href="detail.html" th:href="@{/employee/showList}">従業員リスト</a></li>
 			<li class="active">従業員詳細</li>
 		</ol>
@@ -115,7 +116,8 @@
 								</tr>
 								<tr>
 									<th nowrap>給料</th>
-									<td><span th:text="${#numbers.formatInteger(employee.salary,1,'COMMA') + '円'}">400000円</span>
+									<td><span
+										th:text="${#numbers.formatInteger(employee.salary,1,'COMMA') + '円'}">400000円</span>
 									</td>
 								</tr>
 								<tr>
