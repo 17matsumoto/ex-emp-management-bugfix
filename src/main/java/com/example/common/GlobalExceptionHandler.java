@@ -9,10 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
-	
-	private static final Logger LOGGER
-	= LoggerFactory.getLogger(GlobalExceptionHandler.class);
-	
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
 	@Override
 	public ModelAndView resolveException(
 			HttpServletRequest request, 
