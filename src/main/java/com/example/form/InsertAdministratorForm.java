@@ -15,6 +15,7 @@ public class InsertAdministratorForm {
 	private String name;
 	/** メールアドレス */
 	@NotBlank(message = "メールアドレスを入力してください")
+	// 修正箇所
 	@UnusedMailAddress
 	private String mailAddress;
 	/** パスワード */
@@ -26,7 +27,6 @@ public class InsertAdministratorForm {
 	 */
 	private String passwordConfirmation;
 
-//修正箇所
 	@AssertTrue(message = "パスワードと確認用パスワードは同一にしてください。")
 	public boolean isPasswordValid() {
 		if (password == null || password.isEmpty()) {

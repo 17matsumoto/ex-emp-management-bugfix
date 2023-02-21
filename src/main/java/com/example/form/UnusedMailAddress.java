@@ -10,18 +10,20 @@ import jakarta.validation.Payload;
 
 /**
  * メールアドレス重複ヴァリテーションのアノテーション.
+ * 
  * @author matsumotoyuyya
  *
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {UnusedMailAddressValidator.class})
+@Constraint(validatedBy = { UnusedMailAddressValidator.class })
 
 public @interface UnusedMailAddress {
-	
-	 String message() default "このメールアドレスは既に登録されています";
-	    Class<?>[] groups() default {};
-	    Class<? extends Payload>[] payload() default {};
-	   
+//修正箇所
+	String message() default "このメールアドレスは既に登録されています";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 
 }
