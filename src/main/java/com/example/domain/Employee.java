@@ -9,7 +9,6 @@ import java.util.Date;
  * 
  */
 public class Employee {
-	/** id */
 	private Integer id;
 	/** 従業員名 */
 	private String name;
