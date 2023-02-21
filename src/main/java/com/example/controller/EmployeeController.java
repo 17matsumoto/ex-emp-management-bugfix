@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +91,25 @@ public class EmployeeController {
 		employee.setDependentsCount(form.getIntDependentsCount());
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
+	}
+
+	/**
+	 * 従業員曖昧検索.
+	 * 
+	 * @param name  名前
+	 * @param model モデル
+	 * @return 従業員リスト
+	 */
+	@PostMapping("/serch")
+	public String serch(String name, Model model) {
+		List<Employee> employeeList = employeeService.findByName(name);
+		if(employeeList==null) {
+			List<Employee> employeeList2 = employeeService.showList();
+			model.addAttribute("employeeList", employeeList2);
+			model.addAttribute("message", "1件もありませんでした");
+			return "employee/list";
+		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
 	}
 }
