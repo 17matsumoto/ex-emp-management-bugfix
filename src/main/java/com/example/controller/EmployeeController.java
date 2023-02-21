@@ -103,13 +103,15 @@ public class EmployeeController {
 	@PostMapping("/serch")
 	public String serch(String name, Model model) {
 		List<Employee> employeeList = employeeService.findByName(name);
-		if(employeeList==null) {
+		if (employeeList == null) {
 			List<Employee> employeeList2 = employeeService.showList();
 			model.addAttribute("employeeList", employeeList2);
 			model.addAttribute("message", "1件もありませんでした");
 			return "employee/list";
 		}
-		model.addAttribute("employeeList", employeeList);
+		if (employeeList != null) {
+			model.addAttribute("employeeList", employeeList);
+		}
 		return "employee/list";
 	}
 }
