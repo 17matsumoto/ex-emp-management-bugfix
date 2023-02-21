@@ -9,12 +9,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object obj,
+	public ModelAndView resolveException(
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			Object obj, 
 			Exception e) {
 		LOGGER.error("システムエラーが発生しました！", e);
-		return null;
+		return null; 
 	}
 }
