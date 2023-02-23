@@ -2,14 +2,26 @@ package com.example.domain;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 /**
  * 従業員情報を表すドメイン.
  * 
  * @author igamasayuki
  * 
  */
+@Entity
+@Table(name = "employees")
 public class Employee {
 	/** id */
+	@Id
+	@SequenceGenerator(name = "employee_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	/** 従業員名 */
 	private String name;
