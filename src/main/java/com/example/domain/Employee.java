@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "employees")
 public class Employee {
+
 	/** id */
 	@Id
 	@SequenceGenerator(name = "employee_id_seq")

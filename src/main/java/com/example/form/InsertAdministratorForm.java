@@ -15,24 +15,26 @@ public class InsertAdministratorForm {
 	private String name;
 	/** メールアドレス */
 	@NotBlank(message = "メールアドレスを入力してください")
+	// 修正箇所
 	@UnusedMailAddress
 	private String mailAddress;
 	/** パスワード */
 	@NotBlank
 	private String password;
-	
-	 /**
-	 * 確認用パスワード*/
+
+	/**
+	 * 確認用パスワード
+	 */
 	private String passwordConfirmation;
 
-	    @AssertTrue(message = "パスワードと確認用パスワードは同一にしてください。")
-	    public boolean isPasswordValid() {
-	        if (password == null || password.isEmpty()) {
-	            return true;
-	        }
+	@AssertTrue(message = "パスワードと確認用パスワードは同一にしてください。")
+	public boolean isPasswordValid() {
+		if (password == null || password.isEmpty()) {
+			return true;
+		}
 
-	        return password.equals(passwordConfirmation);
-	    } 
+		return password.equals(passwordConfirmation);
+	}
 
 	public String getName() {
 		return name;
@@ -71,8 +73,5 @@ public class InsertAdministratorForm {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
 				+ ", passwordConfirmation=" + passwordConfirmation + "]";
 	}
-	
-	
 
-	
 }
