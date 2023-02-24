@@ -3,6 +3,8 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
+import com.example.repository.PageEmployeeRepository;
 import com.example.service.EmployeeService;
 
 /**
@@ -28,6 +31,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private PageEmployeeRepository pageEmployeeRepository;
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -49,8 +55,13 @@ public class EmployeeController {
 	 * @return 従業員一覧画面
 	 */
 	@GetMapping("/showList")
-	public String showList(Model model) {
-		List<Employee> employeeList = employeeService.showList();
+	public String showList(Model model , Pageable pageable) {
+	Page<Employee> pageList =	 pageEmployeeRepository.findAll(pageable);
+    List<Employee> employeeList = pageList.getContent();
+    for(Employee employee : employeeList) {
+        System.out.println(employee);
+    }
+    model.addAttribute("pages", pageList);
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
