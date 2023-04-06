@@ -1,13 +1,26 @@
 package com.example.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 /**
  * 管理者情報を表すドメイン.
  * 
  * @author igamasayuki
  * 
  */
+@Entity
+@Table(name = "administrators")
 public class Administrator {
+	
 	/** id(主キー) */
+	@Id
+	@SequenceGenerator(name = "administrator_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	/** 名前 */
 	private String name;

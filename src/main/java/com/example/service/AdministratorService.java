@@ -1,6 +1,7 @@
 package com.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,13 @@ public class AdministratorService {
 	 * @param administrator 管理者情報
 	 */
 	public void insert(Administrator administrator) {
-		administratorRepository.insert(administrator);
+		administratorRepository.save(administrator);
+		BCryptPasswordEncoder bcpe = new BCryptPasswordEncoder();
+		// ハッシュ化
+		String encodeedPassword = bcpe.encode(administrator.getPassword());
+		administrator.setPassword(encodeedPassword);
+		administratorRepository.save(administrator);
+
 	}
 
 	/**
@@ -37,7 +44,7 @@ public class AdministratorService {
 	 * @return 管理者情報 存在しない場合はnullが返ります
 	 */
 	public Administrator login(String mailAddress, String password) {
-		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
+		Administrator administrator = administratorRepository.findByMailAddressAndPassword(mailAddress, password);
 		return administrator;
 	}
 

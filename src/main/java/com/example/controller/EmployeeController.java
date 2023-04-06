@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
-import com.example.repository.PageEmployeeRepository;
 import com.example.service.EmployeeService;
 
 /**
@@ -31,9 +30,6 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
-	
-	@Autowired
-	private PageEmployeeRepository pageEmployeeRepository;
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -45,25 +41,33 @@ public class EmployeeController {
 		return new UpdateEmployeeForm();
 	}
 
-	/////////////////////////////////////////////////////
-	// ユースケース：従業員一覧を表示する
-	/////////////////////////////////////////////////////
-	/**
-	 * 従業員一覧画面を出力します.
-	 * 
-	 * @param model モデル
-	 * @return 従業員一覧画面
-	 */
-	@GetMapping("/showList")
-	public String showList(Model model , Pageable pageable) {
-	Page<Employee> pageList =	 pageEmployeeRepository.findAll(pageable);
-    List<Employee> employeeList = pageList.getContent();
-    for(Employee employee : employeeList) {
-        System.out.println(employee);
-    }
-    model.addAttribute("pages", pageList);
-		model.addAttribute("employeeList", employeeList);
-		return "employee/list";
+	
+
+	
+
+	public String showList( Model model,  Pageable pageable ,String name) {
+		System.out.println("aaa");
+
+		List<Employee> employeeList = null;
+		Page<Employee> pageList = null;
+
+		if (name != null) {
+			employeeList = employeeService.findByName(name);
+			pageList = employeeService.findAll(pageable);
+
+		} else {
+			pageList = employeeService.findAll(pageable);
+			employeeList = pageList.getContent();
+		}
+
+		if (employeeList.isEmpty()) {
+			model.addAttribute("message", "１件もありませんでした。");
+			employeeList = employeeService.showList();
+			pageList = employeeService.findAll(pageable);
+
+		}
+		return "/employee/list";
+
 	}
 
 	/////////////////////////////////////////////////////
@@ -104,6 +108,7 @@ public class EmployeeController {
 		return "redirect:/employee/showList";
 	}
 
+
 	/**
 	 * 従業員曖昧検索.
 	 * 
@@ -125,4 +130,5 @@ public class EmployeeController {
 		}
 		return "employee/list";
 	}
+
 }
