@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.Administrator;
@@ -89,35 +90,24 @@ public class AdministratorController {
 		return "redirect:/";
 	}
 
-	/////////////////////////////////////////////////////
-	// ユースケース：ログインをする
-	/////////////////////////////////////////////////////
-	/**
-	 * ログイン画面を出力します.
-	 * 
-	 * @return ログイン画面
-	 */
-	@GetMapping("/")
-	public String toLogin() {
-		return "administrator/login";
-	}
-	/**
-	 * ログインします.
-	 * 
-	 * @param form 管理者情報用フォーム
-	 * @return ログイン後の従業員一覧画面
-	 */
-	@PostMapping("/login")
-	public String login(LoginForm form, RedirectAttributes redirectAttributes) {
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		if (administrator == null) {
-			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
-			return "redirect:/";
-		}
-		session.setAttribute("administratorName", administrator.getName());
-
-		return "redirect:/employee/showList";
-	}
+	
+/////////////////////////////////////////////////////
+// ユースケース：ログインをする
+/////////////////////////////////////////////////////
+/**
+* ログイン画面を出力します.
+* 
+* @return ログイン画面
+*/
+@GetMapping("/")
+public String toLogin(Model model, @RequestParam(required = false) String error) {
+System.err.println("login error:" + error);
+if (error != null) {
+System.err.println("login failed");
+model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
+}
+return "administrator/login";
+}
 
 	/////////////////////////////////////////////////////
 	// ユースケース：ログアウトをする
